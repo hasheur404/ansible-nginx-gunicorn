@@ -14,12 +14,22 @@
         dest: "/etc/ssh/sshd_config.orig"
 
     # Disable root logins
-    - name: Change PermitRootLogin to 'no'
+    - name: Change PermitRootLogin to 'no' - RedHat
       lineinfile: 
         dest: "/etc/ssh/sshd_config"
         regexp: '^#PermitRootLogin'
         line: 'PermitRootLogin no'
         state: present
+      when: ansible_os_family == "RedHat"
+
+    # Disable root logins
+    - name: Change PermitRootLogin to 'no' - Debian
+      lineinfile: 
+        dest: "/etc/ssh/sshd_config"
+        regexp: '^PermitRootLogin'
+        line: 'PermitRootLogin no'
+        state: present
+      when: ansible_os_family == "Debian"
 
     # Allow the Ansible user ('ansibleuser') to log in via SSH
     - name: Add 'AllowUsers' to sshd_config
