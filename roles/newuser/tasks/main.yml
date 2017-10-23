@@ -1,0 +1,45 @@
+---
+    - name: create a non-root user
+      user: 
+        name: "{{ newuser_name }}"
+        password: "{{ newuser_pass }}"
+        shell: "/bin/bash"
+        ssh_key_file: "~/.ssh/id_rsa"
+
+    - name: Add authentication key for passwordless login
+      authorized_key: 
+        user: "{{ newuser_name }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: check if 'sudo' exists on the remote server (CentOS/RedHat)
+      yum: 
+        name: sudo
+        update_cache: yes
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: check if 'sudo' exists on the remote server (Debian/Ubuntu)
+      apt: 
+        name: sudo
+        update_cache: yes
+        state: latest
+      when: ansible_os_family == "Debian"
+
+    - name: Check and confirm if the remote server have a 'wheel' group
+      group: 
+        name: wheel
+        state: present
+
+    - name: Allow passwordless sudo for the 'wheel' group
+      lineinfile: 
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: "%wheel ALL=(ALL) NOPASSWD:ALL"
+        validate: 'visudo -cf %s'
+ 
+    - name: Add the new user to the 'wheel' group
+      user: 
+        name: "{{ newuser_name }}"
+        groups: wheel
+        append: yes
