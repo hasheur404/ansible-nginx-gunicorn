@@ -23,4 +23,25 @@
         - "sites-available"
         - "sites-enabled"
     
-    -  
+    - name: Include 'sites-enabled' in conf
+      lineinfile:
+        dest: "/etc/nginx/nginx.conf"
+        line: "    include /etc/nginx/sites-enabled/*.conf;"
+        insertafter: '^http'
+        state: present
+
+    - name: Add new vhosts conf file
+      template:
+        src: flaskr.com.conf.j2
+        dest: "/etc/nginx/sites-available/flaskr.com.conf"
+
+    - name: Symlink from 'sites-available' to 'sites-enabled'
+      file:
+        src: "/etc/nginx/sites-available/flaskr.com.conf"
+        dest: "/etc/nginx/sites-enabled/flaskr.com.conf"
+        owner: "root"
+        group: "root"
+        state: link
+
+    - name: Check Nginx conf
+      command: nginx -t
