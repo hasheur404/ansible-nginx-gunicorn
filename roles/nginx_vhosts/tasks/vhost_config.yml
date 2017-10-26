@@ -33,15 +33,34 @@
     - name: Add new vhosts conf file
       template:
         src: flaskr.com.conf.j2
-        dest: "/etc/nginx/sites-available/flaskr.com.conf"
+        dest: "/etc/nginx/sites-available/{{ webuser_name }}.com.conf"
 
     - name: Symlink from 'sites-available' to 'sites-enabled'
       file:
-        src: "/etc/nginx/sites-available/flaskr.com.conf"
-        dest: "/etc/nginx/sites-enabled/flaskr.com.conf"
+        src: "/etc/nginx/sites-available/{{ webuser_name }}.com.conf"
+        dest: "/etc/nginx/sites-enabled/{{ webuser_name }}.com.conf"
         owner: "root"
         group: "root"
         state: link
 
     - name: Check Nginx conf
       command: nginx -t
+
+    - name: Copy test index file
+      template:
+        src: index.debian.html.j2
+        dest: "/home/{{ webuser_name }}/public_html/index.html"
+        owner: "{{ webuser_name }}"
+        group: "{{ webuser_name }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Copy test index file
+      template:
+        src: index.centos.html.j2
+        dest: "/home/{{ webuser_name }}/public_html/index.html"
+        owner: "{{ webuser_name }}"
+        group: "{{ webuser_name }}"
+      when: ansible_os_family == "RedHat"
+
+      notify:
+        - restart_nginx
