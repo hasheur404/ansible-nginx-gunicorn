@@ -1,4 +1,3 @@
 ---
 - include: newuser.yml
 - include: vhost_config.yml
-- include: test_index.yml
