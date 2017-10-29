@@ -1,18 +1,20 @@
 ---
+#- hosts: webservers
+#  remote_user: root
+#
+#  roles:
+#    - newuser
+
 - hosts: webservers
-  remote_user: root
+  remote_user: ansibleuser
+  become: yes
+  become_method: sudo
 
   roles:
-    - newuser
-
-#- hosts: webservers
-#  remote_user: ansibleuser
-#  become: yes
-#  become_method: sudo
-
-#  roles:
-#    - secure_ssh
+#    - securessh
+#    - prerequisites
 #    - nginx
 #    - nginx_vhosts
+     - python3
 #    - gunicorn
 #    - flask
