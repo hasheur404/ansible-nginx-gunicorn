@@ -19,3 +19,11 @@
       when: 
         - py_version.stderr.find('Python 2.') != -1
         - ansible_os_family == "Debian"
+
+    - name: Run Py3 installation - RedHat
+      script: py3_centos.sh
+      when: ansible_os_family == "RedHat"
+
+    - name: Run Py3 installation - Debian
+      script: py3_debian.sh
+      when: ansible_os_family == "Debian"
