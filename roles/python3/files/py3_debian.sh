@@ -16,7 +16,7 @@ fi
 # Install packages required to build Python from source
 echo -e "\nInstalling developement tools required to build from source."
 apt-get install build-essential -y > /dev/null 2>&1
-apt-get install wget libncursesw5-dev libreadline5-dev libssl-dev libgdbm-dev libc6-dev libsqlite3-dev tk-dev -y > /dev/null 2>&1
+apt-get install wget libncursesw5-dev libreadline5-dev libssl-dev libgdbm-dev libc6-dev libsqlite3-dev tk-dev zlib1g-dev -y > /dev/null 2>&1
 
 # To download Python 3's source from the official repository
 echo -e "\nDownloading Python source..."
@@ -39,7 +39,7 @@ make install > /dev/null 2>&1
 
 # Create symlinks so that all the users on the system can use Python3
 echo -e "\nBuild complete. Creating symlinks."
-ln -s /usr/bin/python36/bin/python3.6 /usr/bin/python3
+ln -s /usr/bin/python36/bin/python3.6 /usr/bin/python36
 
 # Report status
 echo -e "\n\nAll done.\nCheck the commands 'which python3' and 'python3 -V'\n"  
