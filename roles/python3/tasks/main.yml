@@ -1,0 +1,21 @@
+---
+
+    - name: Check default Python version
+      command: 'python -V'
+      register: py_version
+
+    - name: Install Python 3 if not default version - RedHat
+      copy:
+        src: files/py3_centos.sh
+        dest: .
+      when: 
+        - py_version.stderr.find('Python 2.') != -1
+        - ansible_os_family == "RedHat"
+
+    - name: Copy Python 3 if not default version - Debian
+      copy:
+        src: files/py3_debian.sh
+        dest: .
+      when: 
+        - py_version.stderr.find('Python 2.') != -1
+        - ansible_os_family == "Debian"
