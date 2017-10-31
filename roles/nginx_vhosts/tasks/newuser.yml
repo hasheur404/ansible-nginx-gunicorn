@@ -5,8 +5,11 @@
         password: "{{ webuser_pass }}"
         shell: "/bin/bash"
         ssh_key_file: "~/.ssh/id_rsa"
-        state: present
-        system: no
+
+    - name: Add authentication key for passwordless login
+      authorized_key:
+        user: "{{ webuser_name }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
     - name: Add the new user to the 'sudo' group - Debian
       user:
@@ -21,11 +24,6 @@
         groups: wheel
         append: yes
       when: ansible_os_family == "RedHat"
-
-    - name: Add authentication key for passwordless login
-      authorized_key:
-        user: "{{ webuser_name }}"
-        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
     - file:
         path: "/home/{{ webuser_name }}/{{ item }}"
