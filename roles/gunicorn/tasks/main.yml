@@ -1,1 +1,7 @@
 ---
+    - name: Copy gunicorn template
+      template:
+        src: gunicorn.service.j2
+        dest: "/etc/systemd/system/{{ webuser_name }}.service"
+        owner: "root"
+        group: "root"
