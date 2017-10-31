@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve {{ webuser_name }}
+After=network.target
+
+[Service]
+User={{ webuser_name }}
+Group=nginx
+WorkingDirectory=/home/{{ webuser_name }}/public_html
+Environment="PATH=/home/{{ webuser_name }}/public_html/flask_demoenv/bin"
+ExecStart=/home/{{ webuser_name }}/public_html/flask_demoenv/bin/gunicorn --workers 3 --bind unix:{{ webuser_name }}.sock -m 007 run
+
+[Install]
+WantedBy=multi-user.target
