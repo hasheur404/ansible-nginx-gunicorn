@@ -13,10 +13,20 @@
         state: latest
       when: ansible_os_family == "RedHat"
 
-    - name: Clone git repo
-      git:
-        repo: https://github.com/rn4ir/flask-gunicorn-demo.git
-        dest: /home/{{ webuser_name }}/public_html/flask-demo
-        clone: yes
-        force: yes
+    - name: Copy venv script - RedHat
+      template:
+        src: venv_centos.sh.j2
+        dest: ./venv.sh
+      when:
+        - ansible_os_family == "RedHat"
 
+    - name: Copy venv script - Debian
+      template:
+        src: venv_debian.sh.j2
+        dest: ./venv.sh
+      when:
+        - ansible_os_family == "Debian"
+
+#    - name: Run venv installation - RedHat
+#      script: py3_centos.sh
+#      when: ansible_os_family == "RedHat"
