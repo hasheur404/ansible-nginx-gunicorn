@@ -25,7 +25,8 @@
         append: yes
       when: ansible_os_family == "RedHat"
 
-    - file:
+    - name: Create web-root dirs
+      file:
         path: "/home/{{ webuser_name }}/{{ item }}"
         owner: "{{ webuser_name }}"
         group: "{{ webuser_name }}"
@@ -35,7 +36,8 @@
         - "public_html"
         - "logs"
 
-    - file:
+    - name: Change home dir path
+      file:
         path: "/home/{{ webuser_name }}"
         owner: "{{ webuser_name }}"
         group: "{{ webuser_name }}"
