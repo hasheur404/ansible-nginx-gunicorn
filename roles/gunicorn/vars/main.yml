@@ -1,2 +1,3 @@
 ---
 webuser_name: "flaskr"
+webuser_env: "flask_demoenv"

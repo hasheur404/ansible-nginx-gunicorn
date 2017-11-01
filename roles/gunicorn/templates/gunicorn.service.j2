@@ -6,8 +6,8 @@ After=network.target
 User={{ webuser_name }}
 Group=nginx
 WorkingDirectory=/home/{{ webuser_name }}/public_html
-Environment="PATH=/home/{{ webuser_name }}/public_html/flask_demoenv/bin"
-ExecStart=/home/{{ webuser_name }}/public_html/flask_demoenv/bin/gunicorn --workers 3 --bind unix:{{ webuser_name }}.sock -m 007 run
+Environment="PATH=/home/{{ webuser_name }}/public_html/{{ webuser_env }}/bin"
+ExecStart=/home/{{ webuser_name }}/public_html/{{ webuser_env }}/bin/gunicorn --workers 3 --bind unix:{{ webuser_name }}.sock -m 007 run
 
 [Install]
 WantedBy=multi-user.target
