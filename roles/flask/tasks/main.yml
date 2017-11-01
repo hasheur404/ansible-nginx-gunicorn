@@ -27,6 +27,13 @@
       when:
         - ansible_os_family == "Debian"
 
-#    - name: Run venv installation - RedHat
-#      script: py3_centos.sh
-#      when: ansible_os_family == "RedHat"
+    - name: Change venv_script perms
+      file:
+        path: "/home/{{ webuser_name }}/venv.sh"
+        owner: "{{ webuser_name }}"
+        group: "{{ webuser_name }}"
+        state: file
+        mode: 0755
+
+    - name: Run venv installation
+      command: sh venv.sh

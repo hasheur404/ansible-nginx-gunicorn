@@ -2,10 +2,9 @@
 
 cd public_html
 python3 -m venv {{ webuser_env }}
-source {{ webuser_name }}/bin/activate
+source {{ webuser_env }}/bin/activate
 git init
 git remote add origin https://github.com/rn4ir/flask-gunicorn-demo.git
 git pull origin master
 /usr/bin/yes | pip install -r requirements.txt
 deactivate
-logout
