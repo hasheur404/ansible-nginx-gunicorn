@@ -23,5 +23,5 @@
   become_method: sudo
 
   roles:
-    - gunicorn
-#    - flask
+    - flask
+#    - gunicorn

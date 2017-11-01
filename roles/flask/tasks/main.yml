@@ -1,0 +1,22 @@
+---
+    - name: Install git - Debian
+      apt:
+        name: git
+        update_cache: yes
+        state: latest
+      when: ansible_os_family == "Debian"
+
+    - name: Install git - RedHat
+      yum:
+        name: git
+        update_cache: yes
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Clone git repo
+      git:
+        repo: https://github.com/rn4ir/flask-gunicorn-demo.git
+        dest: /home/{{ webuser_name }}/public_html/flask-demo
+        clone: yes
+        force: yes
+
