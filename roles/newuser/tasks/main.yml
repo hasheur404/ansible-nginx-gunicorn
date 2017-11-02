@@ -65,6 +65,6 @@
     - name: Add the new user to the 'sudo' group - Debian
       user: 
         name: "{{ newuser_name }}"
-        groups: wheel
+        groups: sudo
         append: yes
       when: ansible_os_family == "Debian"
