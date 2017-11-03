@@ -40,3 +40,7 @@
         update_cache: yes
         state: latest
       when: ansible_os_family == "RedHat"
+
+    - name: Disable selinux
+      command: "setenforce 0"
+      when: ansible_os_family == "RedHat"
