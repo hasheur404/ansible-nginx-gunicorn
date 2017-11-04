@@ -1,0 +1,11 @@
+---
+    # Restart ithe Gunicorn service
+    - name: enable_gunicorn
+      service: 
+        name: "{{ webuser_name }}"
+        enabled: yes
+
+    - name: start_gunicorn
+      service: 
+        name: "{{ webuser_name }}"
+        state: started
