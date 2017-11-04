@@ -13,32 +13,26 @@
         state: latest
       when: ansible_os_family == "Debian"
     
-    - name: Install firewalld - Debian
+    - name: Install prerequisites
       apt: 
-        name: firewalld
+        name: "{{ item }}"
         update_cache: yes
         state: latest
+      with_items:
+        - firewalld
+        - systemd
+        - git
       when: ansible_os_family == "Debian"
 
-    - name: Install firewalld - RedHat
+    - name: Install prerequisites
       yum: 
-        name: firewalld
+        name: "{{ item }}"
         update_cache: yes
         state: latest
-      when: ansible_os_family == "RedHat"
-
-    - name: Install systemd - Debian
-      apt: 
-        name: systemd
-        update_cache: yes
-        state: latest
-      when: ansible_os_family == "Debian"
-
-    - name: Install systemd - RedHat
-      yum: 
-        name: systemd
-        update_cache: yes
-        state: latest
+      with_items:
+        - firewalld
+        - systemd
+        - git
       when: ansible_os_family == "RedHat"
 
     - name: Disable selinux

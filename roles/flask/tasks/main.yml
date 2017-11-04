@@ -1,18 +1,4 @@
 ---
-    - name: Install git - Debian
-      apt:
-        name: git
-        update_cache: yes
-        state: latest
-      when: ansible_os_family == "Debian"
-
-    - name: Install git - RedHat
-      yum:
-        name: git
-        update_cache: yes
-        state: latest
-      when: ansible_os_family == "RedHat"
-
     - name: Copy venv script - RedHat
       template:
         src: venv_centos.sh.j2
