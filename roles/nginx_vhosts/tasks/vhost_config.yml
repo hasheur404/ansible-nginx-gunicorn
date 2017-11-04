@@ -62,5 +62,19 @@
         group: "{{ webuser_name }}"
       when: ansible_os_family == "RedHat"
 
+    - name: SELinux Context - Docroot
+      sefcontext:
+        target: "/home/{{ webuser_name }}/public_html/"
+        setype: httpd_sys_content_t
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: SELinux Context - Logs
+      sefcontext:
+        target: "/home/{{ webuser_name }}/logs/"
+        setype: httpd_log_t
+        state: present
+      when: ansible_os_family == "RedHat"
+
       notify:
         - restart_nginx
