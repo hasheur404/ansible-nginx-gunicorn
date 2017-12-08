@@ -31,7 +31,7 @@
           name: nginx
           state: started
           enabled: yes
-
+      changed_when: true
       notify:
         - open_http_port
         - open_https_port
